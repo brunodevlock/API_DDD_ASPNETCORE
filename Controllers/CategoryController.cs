@@ -1,4 +1,5 @@
 using Microsoft.AspNetCore.Mvc;
+using Shop.Models;
 
 
 //EndPoint => URL
@@ -18,11 +19,18 @@ public class CategoryController : ControllerBase
         return "GET";
     }
 
+    [HttpGet]
+    [Route("{id:int}")]
+    public string GetById(int id)
+    {
+        return "GET " + id.ToString();
+    }
+
     [HttpPost]
     [Route("")]
-    public string Post()
+    public Category Post([FromBody]Category model)
     {
-        return "POST";
+        return model;
     }
 
     [HttpPut]
