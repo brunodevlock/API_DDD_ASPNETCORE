@@ -24,8 +24,11 @@ namespace Shop
 
             services.AddControllers();
             //Usando o InMemory
-            services.AddDbContext<DataContext>(opt => opt.UseInMemoryDatabase("Database"));
-
+           // services.AddDbContext<DataContext>(opt => opt.UseInMemoryDatabase("Database"));
+            services.AddDbContext<DataContext>(
+                opt => opt.UseSqlServer(Configuration.GetConnectionString("connectionString")));
+            
+            
             //Tratamento de dependency, AddScoped garante que só tem 1 Datacontext por requisição
             //Sempre manterá apenas 1 conexão aberta e quando terminar a requisição ele destroi o DataContext 
             services.AddScoped<DataContext, DataContext>();
