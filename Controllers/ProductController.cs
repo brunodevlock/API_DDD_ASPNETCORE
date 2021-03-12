@@ -43,14 +43,14 @@ public class ProductController : ControllerBase
     //products/categories/1
     [HttpGet]
     [Route("categories/{id:int}")]
-    public async Task<ActionResult<Product>> GetByCategory(
+    public async Task<ActionResult<Product>> GetByCategory(int id,
     [FromServices]DataContext context)
     {
         var products = await context
         .Products
         .Include(x => x.Category)
         .AsNoTracking()
-        .Where(x => x.CategoryId == id)
+        .Where(x => x.CategoryId == id.ToString())
         .ToListAsync();
         
         return Ok(products);
