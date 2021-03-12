@@ -41,6 +41,7 @@ public class ProductController : ControllerBase
 
 
     //products/categories/1
+    //Produto por categoria
     [HttpGet]
     [Route("categories/{id:int}")]
     public async Task<ActionResult<Product>> GetByCategory(int id,
@@ -50,7 +51,7 @@ public class ProductController : ControllerBase
         .Products
         .Include(x => x.Category)
         .AsNoTracking()
-        .Where(x => x.CategoryId == id.ToString())
+        .Where(x => x.CategoryId == id)
         .ToListAsync();
         
         return Ok(products);
@@ -59,15 +60,15 @@ public class ProductController : ControllerBase
 
     [HttpPost]
     [Route("")]
-    public async Task<ActionResult<List<Product>>> Post(
+    public async Task<ActionResult<Product>> Post(
         [FromBody]Product model, 
         [FromServices]DataContext context)
     {
-        if(!ModelState.IsValid)
+        if(ModelState.IsValid)
         {
             context.Products.Add(model);
             await context.SaveChangesAsync();
-            return Ok(model);
+            return model;
         }
         else
         {
