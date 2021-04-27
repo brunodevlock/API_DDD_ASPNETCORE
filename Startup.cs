@@ -107,10 +107,10 @@ namespace Shop
                 pattern: "{controller=Home}/{action=Index}/{id?}");
             });            
 
-            app.UseEndpoints(endpoints =>
-            {
-                endpoints.MapControllers();
-            });
+            // app.UseEndpoints(endpoints =>
+            // {
+            //     endpoints.MapControllers();
+            // });
         }
     }
 }
