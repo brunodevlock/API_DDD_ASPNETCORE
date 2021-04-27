@@ -28,7 +28,7 @@ namespace Shop
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddCors();
-            services.AddRouting(); 
+            //services.AddRouting(); 
             services.AddResponseCompression(options => 
             {
                 options.Providers.Add<GzipCompressionProvider>();
@@ -90,7 +90,7 @@ namespace Shop
                 c.SwaggerEndpoint("/swagger/v1/swagger.json", "Shop API V1");
             });
             
-            app.UseRouting();
+            //app.UseRouting();
 
             app.UseCors(x => x
                 .AllowAnyOrigin()
@@ -100,17 +100,17 @@ namespace Shop
             app.UseAuthentication();
             app.UseAuthorization();
 
-            app.UseEndpoints(endpoints =>
-            {
-                endpoints.MapControllerRoute(
-                name: "default",
-                pattern: "{controller=Home}/{action=Index}/{id?}");
-            });            
-
             // app.UseEndpoints(endpoints =>
             // {
-            //     endpoints.MapControllers();
-            // });
+            //     endpoints.MapControllerRoute(
+            //     name: "default",
+            //     pattern: "{controller=Home}/{action=Get}/{id?}");
+            // });            
+
+            app.UseEndpoints(endpoints =>
+            {
+                endpoints.MapControllers();
+            });
         }
     }
 }
