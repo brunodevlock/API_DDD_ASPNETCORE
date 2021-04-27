@@ -46,8 +46,15 @@ namespace Shop.Controlers
 
                 try
                 {
+                    //força o usuário a ser sempre "funcionário"
+                    model.Role = "employee";
+
                     context.Users.Add(model);
                     await context.SaveChangesAsync();
+
+                    //Esconde a senha
+                    model.Password = "";
+
                     return model;       
                 }
                 catch (Exception)
@@ -75,6 +82,9 @@ namespace Shop.Controlers
 
                 //Validação simples
                 var token = TokenService.GenerateToken(user);
+
+                //esconde a senha
+                user.Password = "";
                 return new
                 {
                     user = user,

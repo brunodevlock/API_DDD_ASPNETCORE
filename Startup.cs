@@ -28,10 +28,11 @@ namespace Shop
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddCors();
+            services.AddRouting(); 
             services.AddResponseCompression(options => 
             {
                 options.Providers.Add<GzipCompressionProvider>();
-                options.MimeTypes = ResponseCompressionDefaults.MimeTypes.Concat(new[] { "application/json"});
+                options.MimeTypes = ResponseCompressionDefaults.MimeTypes.Concat(new[] {"application/json"});
             });
 
             //services.AddResponseCaching();
@@ -58,14 +59,14 @@ namespace Shop
 
 
             //Usando o InMemory
-           // services.AddDbContext<DataContext>(opt => opt.UseInMemoryDatabase("Database"));
-            services.AddDbContext<DataContext>(
-                opt => opt.UseSqlServer(Configuration.GetConnectionString("connectionString")));
+            services.AddDbContext<DataContext>(opt => opt.UseInMemoryDatabase("Database"));
+            // services.AddDbContext<DataContext>(
+            //     opt => opt.UseSqlServer(Configuration.GetConnectionString("connectionString")));
             
             
             //Tratamento de dependency, AddScoped garante que só tem 1 Datacontext por requisição
             //Sempre manterá apenas 1 conexão aberta e quando terminar a requisição ele destroi o DataContext 
-            services.AddScoped<DataContext, DataContext>();
+            //services.AddScoped<DataContext, DataContext>();
 
             services.AddSwaggerGen(c =>
             {
