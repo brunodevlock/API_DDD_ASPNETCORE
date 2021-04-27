@@ -59,9 +59,9 @@ namespace Shop
 
 
             //Usando o InMemory
-            services.AddDbContext<DataContext>(opt => opt.UseInMemoryDatabase("Database"));
-            // services.AddDbContext<DataContext>(
-            //     opt => opt.UseSqlServer(Configuration.GetConnectionString("connectionString")));
+            //services.AddDbContext<DataContext>(opt => opt.UseInMemoryDatabase("Database"));
+             services.AddDbContext<DataContext>(
+                 opt => opt.UseSqlServer(Configuration.GetConnectionString("connectionString")));
             
             
             //Tratamento de dependency, AddScoped garante que só tem 1 Datacontext por requisição
@@ -99,6 +99,13 @@ namespace Shop
 
             app.UseAuthentication();
             app.UseAuthorization();
+
+            app.UseEndpoints(endpoints =>
+            {
+                endpoints.MapControllerRoute(
+                name: "default",
+                pattern: "{controller=Home}/{action=Index}/{id?}");
+            });            
 
             app.UseEndpoints(endpoints =>
             {
